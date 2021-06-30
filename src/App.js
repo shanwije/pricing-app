@@ -1,13 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {baseUrl, urls} from "./constants";
+import {Col, Container, Navbar, Row, Table} from 'react-bootstrap';
 
 function App() {
 
     // eslint-disable-next-line no-unused-vars
-    const [productsAndPrices, setProductsAndPrices] = useState(null);
+    const [productsAndPrices, setProductsAndPrices] = useState([]);
 
     useEffect(() => {
         fetchProductsAndPrices();
@@ -22,25 +22,79 @@ function App() {
     }
 
     return (
-        <div className="App">
-            {/*<header className="App-header">*/}
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    {JSON.stringify(productsAndPrices)}
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            {/*</header>*/}
-            <body>
+        <>
+            <Navbar bg="light">
+                <Navbar.Brand>My Assignment Store</Navbar.Brand>
+            </Navbar>
+            <Container>
+                <Row md={1}>
+                    <title>Store</title>
+                    <Col md='1'>
+                        <div className='table-wrapper'>
+                            <Table striped bordered hover variant="dark">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product name</th>
+                                    <th>
+                                        <tr>Prices</tr>
+                                        <tr>
 
-            </body>
-        </div>
+                                        </tr>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    productsAndPrices.length && productsAndPrices.map(({product, pricesList}, i) => {
+                                        console.log(pricesList)
+                                        return (
+                                            <tr>
+                                                <td>{i}</td>
+                                                <td>{product.name}</td>
+                                                <td>
+
+                                                    {/*<th>*/}
+                                                    {/*    <td>index</td>*/}
+                                                    {/*    <td>price</td>*/}
+                                                    {/*</th>*/}
+                                                    <div className='price-col'>
+                                                        <Table scrollable={true}>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Item Count</th>
+                                                                <th>Calculated Price</th>
+                                                            </tr>
+                                                            {pricesList.map((price, i) => {
+                                                                return (<tr>
+                                                                    <td>{i}</td>
+                                                                    <td>{price}</td>
+                                                                </tr>);
+                                                            })}
+                                                            </thead>
+                                                        </Table>
+                                                    </div>
+
+
+                                                    {/*</section>*/}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                }
+
+                                </tbody>
+                            </Table>
+                        </div>
+
+                    </Col>
+                    <Col md='1'>
+
+                    </Col>
+                </Row>
+            </Container>
+        </>
+
     );
 }
 
